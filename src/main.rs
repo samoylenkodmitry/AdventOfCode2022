@@ -1,10 +1,15 @@
+use crate::day::Day;
 
+mod day;
 mod day1;
-use crate::day1::Day1;
+mod day2;
 
 fn main() {
-    let input = std::fs::read_to_string("./inputs/day1.txt").unwrap();
-    let day1 = Day1;
-    println!("Day 1, part 1: {}", day1.part1(&input));
-    println!("Day 1, part 2: {}", day1.part2(&input));
+    let days: Vec<Box<dyn Day>> = vec![
+        Box::new(day1::Day1),
+        Box::new(day2::Day2),
+    ];
+    for day in days {
+        day.compute();
+    }
 }
