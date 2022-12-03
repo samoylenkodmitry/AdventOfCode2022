@@ -15,3 +15,7 @@ A
 src/day1.rs,1/a/1a56da782e0415820753259846a795c5f19d3340
 H
 questions_html/day2.html,a/0/a00ee640f55cf8d86bd0ecf4530e907daf8a296d
+?
+inputs/day3.txt,6/3/6369d0067b0ebd4a91341fc1a0d4dd325547d460
+H
+questions_html/day3.html,8/3/8348e0cd5d0634f2388dca2fd33a0d99961e2ea8
