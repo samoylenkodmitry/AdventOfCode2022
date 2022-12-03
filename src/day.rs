@@ -1,6 +1,5 @@
-use std::ffi::CString;
 use std::io::{Read, Write};
-use std::os::raw::c_char;
+
 use std::time::Instant;
 
 static mut COOKIE: Option<String> = None;
