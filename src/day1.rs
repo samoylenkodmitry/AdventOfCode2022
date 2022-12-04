@@ -48,6 +48,10 @@ impl Day for Day1 {
         return -sum;
     }
 
+    fn get_test_data(&self) -> &str {
+        ""
+    }
+
     fn get_day_number(&self) -> i32 {
         return 1;
     }

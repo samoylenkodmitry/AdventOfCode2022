@@ -11,11 +11,11 @@ A
 questions/day1.md,0/e/0e94cc3e16a9564714c23a7afd646fe0f166cea1
 A
 questions/day2.md,5/6/56a3029889b7f7cbffbb216ef14bfd3026c95922
-;
-src/day1.rs,1/a/1a56da782e0415820753259846a795c5f19d3340
 H
 questions_html/day2.html,a/0/a00ee640f55cf8d86bd0ecf4530e907daf8a296d
 ?
 inputs/day3.txt,6/3/6369d0067b0ebd4a91341fc1a0d4dd325547d460
 H
 questions_html/day3.html,8/3/8348e0cd5d0634f2388dca2fd33a0d99961e2ea8
+w
+G.idea/sonarlint/issuestore/0/a/0a3873e95b820e9db303c0a37b3ddf00d9980edd,5/1/514dc7c0615798cf8a3f82230225dfd649274379

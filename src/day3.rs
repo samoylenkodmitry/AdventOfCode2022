@@ -2,13 +2,6 @@ use crate::day::Day;
 
 pub(crate) struct Day3;
 
-const TEST: &'static str = "vJrwpWtwJgWrhcsFMMfFFhFp
-jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-PmmdzqPrVvPwwTWBwg
-wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw";
-
 impl Day for Day3 {
     fn part1(&self, input: &str) -> i32 {
         let mut sum = 0;
@@ -63,6 +56,15 @@ impl Day for Day3 {
             ind += 1;
         }
         sum
+    }
+
+    fn get_test_data(&self) -> &str {
+        "vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw"
     }
 
     fn get_day_number(&self) -> i32 {

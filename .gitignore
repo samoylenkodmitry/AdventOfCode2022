@@ -3,3 +3,5 @@
 /.idea/sonarlint
 !/.idea/sonarlint/
 /.idea/sonarlint/issuestore/
+/session.txt
+!/.idea/sonarlint/issuestore/index.pb

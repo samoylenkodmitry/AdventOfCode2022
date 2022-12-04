@@ -7,9 +7,18 @@ static mut COOKIE: Option<String> = None;
 pub trait Day {
     fn part1(&self, input: &str) -> i32;
     fn part2(&self, input: &str) -> i32;
+    fn get_test_data(&self) -> &str;
     fn compute(&self) {
         Self::fetch_input_from_website(self);
         let day_path = format!("./inputs/day{}.txt", self.get_day_number());
+        let test_data = self.get_test_data();
+        if !test_data.is_empty() {
+            println!("Day {}: part 1 test: {}, part 2 test: {} ",
+                     self.get_day_number(),
+                     self.part1(test_data),
+                     self.part2(test_data)
+            );
+        }
         let input = std::fs::read_to_string(day_path).unwrap();
         // invoke part1 and measure time
         let start = Instant::now();
