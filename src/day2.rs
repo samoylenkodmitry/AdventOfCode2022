@@ -6,7 +6,7 @@ pub(crate) struct Day2;
 
 
 impl Day for Day2 {
-    fn part1(&self, input: &str) -> i32 {
+    fn part1(&self, input: &str) -> String {
         let games = input.trim().split("\n");
 
         let mut total = 0;
@@ -51,10 +51,10 @@ impl Day for Day2 {
             total += score;
         }
 
-        return total;
+        return total.to_string();
     }
 
-    fn part2(&self, input: &str) -> i32 {
+    fn part2(&self, input: &str) -> String {
         // lets map char to score
         // X - 0, Y - 3, Z - 6
         // create a map
@@ -109,11 +109,11 @@ impl Day for Day2 {
             total += score;
         }
 
-        return total;
+        return total.to_string();
     }
 
-    fn get_test_data(&self) -> &str {
-        ""
+    fn get_test_data(&self) -> String {
+        "".to_string()
     }
 
     fn get_day_number(&self) -> i32 {

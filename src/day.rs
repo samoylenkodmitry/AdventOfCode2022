@@ -5,9 +5,9 @@ use std::time::Instant;
 static mut COOKIE: Option<String> = None;
 
 pub trait Day {
-    fn part1(&self, input: &str) -> i32;
-    fn part2(&self, input: &str) -> i32;
-    fn get_test_data(&self) -> &str;
+    fn part1(&self, input: &str) -> String;
+    fn part2(&self, input: &str) -> String;
+    fn get_test_data(&self) -> String;
     fn compute(&self) {
         Self::fetch_input_from_website(self);
         let day_path = format!("./inputs/day{}.txt", self.get_day_number());
@@ -15,8 +15,8 @@ pub trait Day {
         if !test_data.is_empty() {
             println!("Day {}: part 1 test: {}, part 2 test: {} ",
                      self.get_day_number(),
-                     self.part1(test_data),
-                     self.part2(test_data)
+                     self.part1(test_data.as_str()),
+                     self.part2(test_data.as_str())
             );
         }
         let input = std::fs::read_to_string(day_path).unwrap();

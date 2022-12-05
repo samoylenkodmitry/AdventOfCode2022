@@ -3,7 +3,7 @@ use crate::day::Day;
 pub(crate) struct Day3;
 
 impl Day for Day3 {
-    fn part1(&self, input: &str) -> i32 {
+    fn part1(&self, input: &str) -> String {
         let mut sum = 0;
         let a = 'a' as i32;
         let A = 'A' as i32 - 26;
@@ -24,10 +24,10 @@ impl Day for Day3 {
                 }
             }
         }
-        sum
+        sum.to_string()
     }
 
-    fn part2(&self, input: &str) -> i32 {
+    fn part2(&self, input: &str) -> String {
         let a = 'a' as i32;
         let A = 'A' as i32 - 26;
         let mut sum = 0;
@@ -55,16 +55,16 @@ impl Day for Day3 {
             }
             ind += 1;
         }
-        sum
+        sum.to_string()
     }
 
-    fn get_test_data(&self) -> &str {
+    fn get_test_data(&self) -> String {
         "vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
 PmmdzqPrVvPwwTWBwg
 wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
 ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw"
+CrZsJsPPZsGzwwsLwLmpwMDw".to_string()
     }
 
     fn get_day_number(&self) -> i32 {

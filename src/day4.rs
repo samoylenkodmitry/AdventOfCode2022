@@ -29,27 +29,27 @@ impl Range {
 }
 
 impl Day for Day4 {
-    fn part1(&self, input: &str) -> i32 {
+    fn part1(&self, input: &str) -> String {
         Self::parse(input, |two_ranges: &Vec<Range>| -> bool{
             two_ranges[0].contains(&two_ranges[1])
                 || two_ranges[1].contains(&two_ranges[0])
-        })
+        }).to_string()
     }
 
-    fn part2(&self, input: &str) -> i32 {
+    fn part2(&self, input: &str) -> String {
         Self::parse(input, |two_ranges: &Vec<Range>| -> bool{
             two_ranges[0].overlaps(&two_ranges[1])
                 || two_ranges[1].overlaps(&two_ranges[0])
-        })
+        }).to_string()
     }
 
-    fn get_test_data(&self) -> &str {
+    fn get_test_data(&self) -> String {
         "2-4,6-8
 2-3,4-5
 5-7,7-9
 2-8,3-7
 6-6,4-6
-2-6,4-8"
+2-6,4-8".to_string()
     }
 
     fn get_day_number(&self) -> i32 {

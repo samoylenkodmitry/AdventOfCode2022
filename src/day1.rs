@@ -5,7 +5,7 @@ use crate::day::Day;
 pub(crate) struct Day1;
 
 impl Day for Day1 {
-    fn part1(&self, input: &str) -> i32 {
+    fn part1(&self, input: &str) -> String {
         // split lines by a blank line
         let elves = input.trim().split("\n\n");
         // iterate over the lines
@@ -21,10 +21,10 @@ impl Day for Day1 {
             }
             max_calories = max(max_calories, calories_sum);
         }
-        return max_calories;
+        return max_calories.to_string();
     }
 
-    fn part2(&self, input: &str) -> i32 {
+    fn part2(&self, input: &str) -> String {
         // let's use priority queue
         use std::collections::BinaryHeap;
         let mut max_heap = BinaryHeap::new();
@@ -45,11 +45,11 @@ impl Day for Day1 {
             }
         }
         let sum: i32 = max_heap.iter().sum();
-        return -sum;
+        return (-sum).to_string();
     }
 
-    fn get_test_data(&self) -> &str {
-        ""
+    fn get_test_data(&self) -> String {
+        "".to_string()
     }
 
     fn get_day_number(&self) -> i32 {
