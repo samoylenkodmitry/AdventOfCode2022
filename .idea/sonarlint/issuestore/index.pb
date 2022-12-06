@@ -24,3 +24,5 @@ G.idea/sonarlint/issuestore/0/a/0a3873e95b820e9db303c0a37b3ddf00d9980edd,5/1/51
 Cargo.lock,1/4/14a5af756bb04b4a26c80cf95acf32f0f8b9f30f
 A
 questions/day4.md,3/5/359f29c4c48a9586a6ed91cf2694ea4fa997f2f0
+A
+questions/day6.md,5/0/506e57fa173dee5b9b1fce2cadcd7c447d1ad4d0

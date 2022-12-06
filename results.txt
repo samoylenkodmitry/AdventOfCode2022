@@ -1,0 +1,20 @@
+Day 1: part 1: 75622 (1 ms)
+Day 1: part 2: 213159 (0 ms)
+Day 2: part 1: 12645 (1 ms)
+Day 2: part 2: 11756 (1 ms)
+Day 3: part 1 test: 157
+Day 3:  part 2 test: 70
+Day 3: part 1: 7737 (0 ms)
+Day 3: part 2: 2697 (1 ms)
+Day 4: part 1 test: 2
+Day 4:  part 2 test: 4
+Day 4: part 1: 424 (2 ms)
+Day 4: part 2: 804 (2 ms)
+Day 5: part 1 test: CMZ
+Day 5:  part 2 test: MCD
+Day 5: part 1: GRTSWNJHH (3 ms)
+Day 5: part 2: QLFQDBBHM (3 ms)
+Day 6: part 1 test: 7
+Day 6:  part 2 test: 19
+Day 6: part 1: 1042 (0 ms)
+Day 6: part 2: 2980 (4 ms)

@@ -1,23 +1,28 @@
 use std::io::{Read, Write};
 
 use std::time::Instant;
+use std::marker::{Send, Sync};
 
 static mut COOKIE: Option<String> = None;
 
-pub trait Day {
+pub trait Day: Send + Sync {
     fn part1(&self, input: &str) -> String;
     fn part2(&self, input: &str) -> String;
     fn get_test_data(&self) -> String;
-    fn compute(&self) {
+    fn compute(&self) -> String {
         Self::fetch_input_from_website(self);
         let day_path = format!("./inputs/day{}.txt", self.get_day_number());
         let test_data = self.get_test_data();
+        let mut result = String::new();
         if !test_data.is_empty() {
-            println!("Day {}: part 1 test: {}, part 2 test: {} ",
-                     self.get_day_number(),
-                     self.part1(test_data.as_str()),
-                     self.part2(test_data.as_str())
-            );
+            result.push_str(&format!("Day {}: part 1 test: {}\n",
+                                     self.get_day_number(),
+                                     self.part1(test_data.as_str())
+            ));
+            result.push_str(&format!("Day {}:  part 2 test: {}\n",
+                                     self.get_day_number(),
+                                     self.part2(test_data.as_str())
+            ));
         }
         let input = std::fs::read_to_string(day_path).unwrap();
         // invoke part1 and measure time
@@ -28,10 +33,12 @@ pub trait Day {
         let start = Instant::now();
         let part2_result = self.part2(&input);
         let part2_duration = start.elapsed();
-        // print result in format "Day x:\t part x: y (z ms)"
-        println!("Day {}: part 1: {} ({} ms)", self.get_day_number(), part1_result, part1_duration.as_millis());
-        println!("Day {}: part 2: {} ({} ms)", self.get_day_number(), part2_result, part2_duration.as_millis());
+        result.push_str(&format!("Day {}: part 1: {} ({} ms)\n", self.get_day_number(), part1_result, part1_duration.as_millis()));
+        result.push_str(&format!("Day {}: part 2: {} ({} ms)\n", self.get_day_number(), part2_result, part2_duration.as_millis()));
+
+        result
     }
+
     fn fetch_input_from_website(&self) {
         let day_number = self.get_day_number();
         let file_path_input = format!("./inputs/day{}.txt", day_number);
