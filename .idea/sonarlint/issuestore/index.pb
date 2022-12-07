@@ -26,3 +26,7 @@ A
 questions/day4.md,3/5/359f29c4c48a9586a6ed91cf2694ea4fa997f2f0
 A
 questions/day6.md,5/0/506e57fa173dee5b9b1fce2cadcd7c447d1ad4d0
+A
+questions/day3.md,5/d/5dca5cf684d8446d35ed1cde7c44037fd995f925
+;
+src/day2.rs,d/0/d0f421718629b54906993f548bc30798a8f8c116
