@@ -1,3 +1,4 @@
+use std::borrow::Borrow;
 use std::collections::HashMap;
 use crate::day::Day;
 use rayon::prelude::*;
@@ -12,6 +13,7 @@ mod day6;
 mod day7;
 mod day8;
 mod day9;
+mod day10;
 
 fn main() {
     let days: Vec<Box<dyn Day>> = vec![
@@ -24,6 +26,7 @@ fn main() {
         Box::new(day7::Day7),
         Box::new(day8::Day8),
         Box::new(day9::Day9),
+        Box::new(day10::Day10),
     ];
     let mut results = (0..days.len()).into_par_iter().map(|i| {
         days[i].compute()
@@ -42,7 +45,7 @@ fn main() {
 
     // this code written by the ChatGPT & Github Copilot, I'm sorry :)
 
-    let mut table: HashMap<i32, (&str, &str, &str, &str)> = HashMap::new();
+    let mut table: HashMap<i32, (String, String, String, String)> = HashMap::new();
     //read the results from the file results.txt
     // into data
     let mut file = File::open("./results.txt").unwrap();
@@ -50,30 +53,61 @@ fn main() {
     file.read_to_string(&mut contents).unwrap();
 
 
+    let mut day = "";
+    let mut part = "";
+
+    let mut day_num: i32 = 0;
+    let mut part_num: i32 = 0;
+
     for line in contents.lines() {
+        if !line.starts_with("Day") {
+            let entry = table.entry(day_num).or_insert(("".to_string(), 
+                                                        "".to_string(),
+                                                        "".to_string(),
+                                                        "".to_string()));
+            let value = line;
+
+            if part_num == 1 {
+                if part.contains("test") {
+                    entry.0 = format!("{} {} {}", entry.0, "<br>", value);
+                    
+                } else {
+                    entry.2 = format!("{} {} {}", entry.2, "<br>", value);
+                }
+            } else if part_num == 2 {
+                if part.contains("test") {
+                    entry.1 = format!("{} {} {}", entry.1, "<br>", value);
+                } else {
+                    entry.3 = format!("{} {} {}", entry.3, "<br>", value);
+                }
+            }
+            continue;
+        }
         let mut parts = line.split(":");
 
-        let day = parts.next().unwrap();
-        let part = parts.next().unwrap();
+        day = parts.next().unwrap();
+        part = parts.next().unwrap();
         let value = parts.next().unwrap();
 
-        let day_num: i32 = day.split_whitespace().nth(1).unwrap().parse().unwrap();
-        let part_num: i32 = part.split_whitespace().nth(1).unwrap().parse().unwrap();
-        let value_num = value.split_whitespace().nth(0).unwrap();
+        day_num = day.split_whitespace().nth(1).unwrap().parse().unwrap();
+        part_num = part.split_whitespace().nth(1).unwrap().parse().unwrap();
 
-        let entry = table.entry(day_num).or_insert(("", "", "", ""));
+        let entry = table.entry(day_num).or_insert(("".to_string(),
+                                                    "".to_string(),
+                                                    "".to_string(),
+                                                    "".to_string()));
 
         if part_num == 1 {
             if part.contains("test") {
-                entry.0 = value_num;
+                entry.0 = value.to_string();
             } else {
-                entry.2 = value_num;
+                entry.2 = value.to_string();
             }
         } else if part_num == 2 {
             if part.contains("test") {
-                entry.1 = value_num;
+                entry.1 = value.to_string();
             } else {
-                entry.3 = value_num;
+                entry.3 = value.to_string();
             }
         }
     }

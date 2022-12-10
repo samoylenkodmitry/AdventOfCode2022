@@ -30,6 +30,9 @@ A
 questions/day3.md,5/d/5dca5cf684d8446d35ed1cde7c44037fd995f925
 ;
 src/day2.rs,d/0/d0f421718629b54906993f548bc30798a8f8c116
-:
-
-results.md,c/e/cebe22e1a442f9604b5ee5bb6266e83d6fc5167f
+;
+src/day4.rs,4/9/490fcf4384a0a851b3f5813a817487081ebc359a
+;
+src/day5.rs,c/5/c5ba1ccefa992acce22a932145577ce255720d4c
+?
+inputs/day9.txt,3/7/37268eca27df15665aecb6688342cc0ee5a0fdb4

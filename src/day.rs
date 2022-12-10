@@ -19,7 +19,7 @@ pub trait Day: Send + Sync {
                                      self.get_day_number(),
                                      self.part1(test_data.as_str())
             ));
-            result.push_str(&format!("Day {}:  part 2 test: {}\n",
+            result.push_str(&format!("Day {}: part 2 test: {}\n",
                                      self.get_day_number(),
                                      self.part2(test_data.as_str())
             ));
