@@ -69,16 +69,16 @@ fn main() {
 
             if part_num == 1 {
                 if part.contains("test") {
-                    entry.0 = format!("{} {} {}", entry.0, "<br>", value);
+                    entry.0 = format!("{}<br>```{}```", entry.0, value);
                     
                 } else {
-                    entry.2 = format!("{} {} {}", entry.2, "<br>", value);
+                    entry.2 = format!("{}<br>```{}```", entry.2, value);
                 }
             } else if part_num == 2 {
                 if part.contains("test") {
-                    entry.1 = format!("{} {} {}", entry.1, "<br>", value);
+                    entry.1 = format!("{}<br>```{}```", entry.1, value);
                 } else {
-                    entry.3 = format!("{} {} {}", entry.3, "<br>", value);
+                    entry.3 = format!("{}<br>```{}```", entry.3, value);
                 }
             }
             continue;
