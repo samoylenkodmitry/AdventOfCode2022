@@ -74,37 +74,25 @@ impl Day12 {
                 if x > 0 {
                     let v = xy[y][x - 1];
                     if -v + curr <= 1 {
-                        if !set.contains(&(x - 1, y)) {
-                            q.push_back((x - 1, y));
-                            set.push((x - 1, y));
-                        }
+                        try_add(&mut q, &mut set, &(x - 1, y));
                     }
                 }
                 if x < xy[0].len() - 1 {
                     let v = xy[y][x + 1];
                     if -v + curr <= 1 {
-                        if !set.contains(&(x + 1, y)) {
-                            q.push_back((x + 1, y));
-                            set.push((x + 1, y));
-                        }
+                        try_add(&mut q, &mut set, &(x + 1, y));
                     }
                 }
                 if y > 0 {
                     let v = xy[y - 1][x];
                     if -v + curr <= 1 {
-                        if !set.contains(&(x, y - 1)) {
-                            set.push((x, y - 1));
-                            q.push_back((x, y - 1));
-                        }
+                        try_add(&mut q, &mut set, &(x, y - 1));
                     }
                 }
                 if y < xy.len() - 1 {
                     let v = xy[y + 1][x];
                     if -v + curr <= 1 {
-                        if !set.contains(&(x, y + 1)) {
-                            set.push((x, y + 1));
-                            q.push_back((x, y + 1));
-                        }
+                        try_add(&mut q, &mut set, &(x, y + 1));
                     }
                 }
             }
@@ -114,5 +102,12 @@ impl Day12 {
             }
         }
         min
+    }
+}
+
+fn try_add(q: &mut VecDeque<(usize, usize)>, set: &mut Vec<(usize, usize)>, new_v: &(usize, usize)) {
+    if !set.contains(&new_v) {
+        q.push_back(*new_v);
+        set.push(*new_v);
     }
 }
