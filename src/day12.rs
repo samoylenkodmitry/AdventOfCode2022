@@ -59,8 +59,7 @@ impl Day12 {
         let mut q: VecDeque<(usize, usize)> = VecDeque::new();
         q.push_back((e_x, e_y));
 
-
-        let mut visited_set: HashSet<(usize, usize)> = HashSet::new();
+        let mut visited_pos: HashSet<(usize, usize)> = HashSet::new();
         let mut min = 0;
         'outer:
         while !q.is_empty() {
@@ -72,16 +71,16 @@ impl Day12 {
                     break 'outer;
                 }
                 if x > 0 {
-                    compare_and_try_add(&xy, &mut q, &mut visited_set, curr, x - 1, y);
+                    compare_and_try_add(&xy, &mut q, &mut visited_pos, curr, x - 1, y);
                 }
                 if x < xy[0].len() - 1 {
-                    compare_and_try_add(&xy, &mut q, &mut visited_set, curr, x + 1, y);
+                    compare_and_try_add(&xy, &mut q, &mut visited_pos, curr, x + 1, y);
                 }
                 if y > 0 {
-                    compare_and_try_add(&xy, &mut q, &mut visited_set, curr, x, y - 1);
+                    compare_and_try_add(&xy, &mut q, &mut visited_pos, curr, x, y - 1);
                 }
                 if y < xy.len() - 1 {
-                    compare_and_try_add(&xy, &mut q, &mut visited_set, curr, x, y + 1);
+                    compare_and_try_add(&xy, &mut q, &mut visited_pos, curr, x, y + 1);
                 }
             }
             min += 1;
@@ -95,24 +94,24 @@ impl Day12 {
 
 fn compare_and_try_add(
     xy: &Vec<Vec<i32>>,
-    mut q: &mut VecDeque<(usize, usize)>,
-    mut set: &mut HashSet<(usize, usize)>,
+    mut queue: &mut VecDeque<(usize, usize)>,
+    visited_set: &mut HashSet<(usize, usize)>,
     curr: i32,
     new_x: usize,
     new_y: usize,
 ) {
     let v = xy[new_y][new_x];
     if -v + curr <= 1 {
-        try_add(&mut q, set, &(new_x, new_y));
+        try_add(&mut queue, visited_set, &(new_x, new_y));
     }
 }
 
 fn try_add(
-    q: &mut VecDeque<(usize, usize)>,
-    visited_set: &mut HashSet<(usize, usize)>,
+    queue: &mut VecDeque<(usize, usize)>,
+    visited_pos: &mut HashSet<(usize, usize)>,
     new_v: &(usize, usize),
 ) {
-    if visited_set.insert(*new_v) {
-        q.push_back(*new_v);
+    if visited_pos.insert(*new_v) {
+        queue.push_back(*new_v);
     }
 }
