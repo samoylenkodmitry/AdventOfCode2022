@@ -1,4 +1,4 @@
-use std::collections::{VecDeque};
+use std::collections::{HashSet, VecDeque};
 use crate::day::Day;
 
 pub(crate) struct Day12;
@@ -60,7 +60,7 @@ impl Day12 {
         q.push_back((e_x, e_y));
 
 
-        let mut set: Vec<(usize, usize)> = Vec::new();
+        let mut visited_set: HashSet<(usize, usize)> = HashSet::new();
         let mut min = 0;
         'outer:
         while !q.is_empty() {
@@ -72,28 +72,16 @@ impl Day12 {
                     break 'outer;
                 }
                 if x > 0 {
-                    let v = xy[y][x - 1];
-                    if -v + curr <= 1 {
-                        try_add(&mut q, &mut set, &(x - 1, y));
-                    }
+                    compare_and_try_add(&xy, &mut q, &mut visited_set, curr, x - 1, y);
                 }
                 if x < xy[0].len() - 1 {
-                    let v = xy[y][x + 1];
-                    if -v + curr <= 1 {
-                        try_add(&mut q, &mut set, &(x + 1, y));
-                    }
+                    compare_and_try_add(&xy, &mut q, &mut visited_set, curr, x + 1, y);
                 }
                 if y > 0 {
-                    let v = xy[y - 1][x];
-                    if -v + curr <= 1 {
-                        try_add(&mut q, &mut set, &(x, y - 1));
-                    }
+                    compare_and_try_add(&xy, &mut q, &mut visited_set, curr, x, y - 1);
                 }
                 if y < xy.len() - 1 {
-                    let v = xy[y + 1][x];
-                    if -v + curr <= 1 {
-                        try_add(&mut q, &mut set, &(x, y + 1));
-                    }
+                    compare_and_try_add(&xy, &mut q, &mut visited_set, curr, x, y + 1);
                 }
             }
             min += 1;
@@ -105,9 +93,26 @@ impl Day12 {
     }
 }
 
-fn try_add(q: &mut VecDeque<(usize, usize)>, set: &mut Vec<(usize, usize)>, new_v: &(usize, usize)) {
-    if !set.contains(&new_v) {
+fn compare_and_try_add(
+    xy: &Vec<Vec<i32>>,
+    mut q: &mut VecDeque<(usize, usize)>,
+    mut set: &mut HashSet<(usize, usize)>,
+    curr: i32,
+    new_x: usize,
+    new_y: usize,
+) {
+    let v = xy[new_y][new_x];
+    if -v + curr <= 1 {
+        try_add(&mut q, set, &(new_x, new_y));
+    }
+}
+
+fn try_add(
+    q: &mut VecDeque<(usize, usize)>,
+    visited_set: &mut HashSet<(usize, usize)>,
+    new_v: &(usize, usize),
+) {
+    if visited_set.insert(*new_v) {
         q.push_back(*new_v);
-        set.push(*new_v);
     }
 }
