@@ -36,3 +36,7 @@ A
 src/day5.rs,c/5/c5ba1ccefa992acce22a932145577ce255720d4c
 ?
 inputs/day9.txt,3/7/37268eca27df15665aecb6688342cc0ee5a0fdb4
+B
+questions/day10.md,8/c/8c3cb00f9d02f5c88b29de2407497a97f0f2f7e2
+B
+questions/day11.md,8/4/84162625c70e6eba4120672e2febb20e45bc230a

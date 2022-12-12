@@ -108,10 +108,9 @@ impl Day11 {
         let mut monkeys: Vec<Monkey> = Vec::new();
         let mut all_monkeys_items: Vec<VecDeque<u128>> = Vec::new();
         Self::parse_input(input, &mut monkeys, &mut all_monkeys_items);
-        let mut common_test = 1;
-        for monkey in &monkeys {
-            common_test *= monkey.test;
-        }
+        
+        let common_test = monkeys.iter().map(|monkey| monkey.test).product::<u128>();
+        
         let mut counts: Vec<u128> = vec![0; monkeys.len()];
         for round in 0..rounds {
             for monkey in &monkeys {
