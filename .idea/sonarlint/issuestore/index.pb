@@ -19,9 +19,6 @@ H
 questions_html/day3.html,8/3/8348e0cd5d0634f2388dca2fd33a0d99961e2ea8
 w
 G.idea/sonarlint/issuestore/0/a/0a3873e95b820e9db303c0a37b3ddf00d9980edd,5/1/514dc7c0615798cf8a3f82230225dfd649274379
-:
-
-Cargo.lock,1/4/14a5af756bb04b4a26c80cf95acf32f0f8b9f30f
 A
 questions/day4.md,3/5/359f29c4c48a9586a6ed91cf2694ea4fa997f2f0
 A
@@ -40,11 +37,13 @@ A
 inputs/day11.txt,0/b/0be5f1517f3763894e3d070ff597acd43e96f745
 @
 inputs/day12.txt,1/b/1b174f51909365300809976a58e0ea8a24babcb3
-;
-results.txt,d/f/dfd3debc9fffb4d81bd0afe82b3d510a9b3c46d1
 B
 questions/day12.md,6/b/6b1f2099b434689a89cdbb1342f22ff28f96a07f
 ;
 src/day9.rs,c/a/cacf3d8a89f530f09ebff073e64d832ea0b096b6
 <
 src/day11.rs,0/b/0b9be8ae0f144beb622eb756b65d59b1b2ddbd4b
+@
+inputs/day13.txt,8/9/89a91cb85c85b6429896a08a8fc904167afd3a2c
+<
+src/day12.rs,a/8/a8253e5965d34b9f149d1c393a2af2f3f71e1429

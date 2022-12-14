@@ -9,3 +9,9 @@ reqwest = { version = "0.11", features = ["blocking"] }
 flate2 = "1.0.20"
 html2md = "0.2.13"
 rayon = "1.0"
+glium = "0.32.1"
+
+[toolchain]
+channel = "nightly"
+
+[profile.release]

@@ -17,6 +17,7 @@ mod day10;
 mod day11;
 mod day12;
 mod day13;
+mod day14;
 
 fn main() {
     let days: Vec<Box<dyn Day>> = vec![
@@ -33,6 +34,7 @@ fn main() {
         Box::new(day11::Day11),
         Box::new(day12::Day12),
         Box::new(day13::Day13),
+        Box::new(day14::Day14),
     ];
     let mut results = (0..days.len()).into_par_iter().map(|i| {
         days[i].compute()
