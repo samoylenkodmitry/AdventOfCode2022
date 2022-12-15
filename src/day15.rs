@@ -1,5 +1,7 @@
 use std::collections::HashSet;
+use rayon::iter::IntoParallelIterator;
 use crate::day::Day;
+use rayon::prelude::*;
 
 pub(crate) struct Day15;
 
@@ -28,83 +30,17 @@ impl Day for Day15 {
     fn part2(&self, input: &str) -> String {
         let (sensors, dists, min_x, max_x, min_y, test_y, excluded, exp_x, exp_y) = Self::parse(input);
 
-        let border: i32 = 4_000_000;
-        let mut s_x: u128 = 0;
-        let mut s_y: u128 = 0;
-        for i in 0..sensors.len() {
-            // iterate over borders
-            let (sx, sy) = sensors[i];
-            let dist = dists[i] + 1;
-            let left = (sx - dist, sy);
-            let top = (sx, sy - dist);
-            let right = (sx + dist, sy);
-            let bottom = (sx, sy + dist);
-            // from left to top
-            let mut x = left.0;
-            let mut y = left.1;
-            'out:
-            while x <= sx {
-                if 0 + exp_x <= x && x <= border + exp_x && 0 + exp_y <= y && y <= border + exp_y {
-                    let seen = Self::check_all(&sensors, &dists, i, x, y);
-                    if !seen {
-                        s_x = x as u128 - exp_x as u128;
-                        s_y = y as u128 - exp_y as u128;
-                        break 'out;
-                    }
-                }
-                x += 1;
-                y += 1;
-            }
-            // from top to right
-            let mut x = top.0;
-            let mut y = top.1;
-            'out:
-            while y >= sy {
-                if 0 + exp_x <= x && x <= border + exp_x && 0 + exp_y <= y && y <= border + exp_y {
-                    let seen = Self::check_all(&sensors, &dists, i, x, y);
-                    if !seen {
-                        s_x = x as u128 - exp_x as u128;
-                        s_y = y as u128 - exp_y as u128;
-                        break 'out;
-                    }
-                }
-                x += 1;
-                y -= 1;
-            }
-            // from right to bottom
-            let mut x = right.0;
-            let mut y = right.1;
-            'out:
-            while x >= sx {
-                if 0 + exp_x <= x && x <= border + exp_x && 0 + exp_y <= y && y <= border + exp_y {
-                    let seen = Self::check_all(&sensors, &dists, i, x, y);
-                    if !seen {
-                        s_x = x as u128 - exp_x as u128;
-                        s_y = y as u128 - exp_y as u128;
-                        break 'out;
-                    }
-                }
-                x -= 1;
-                y -= 1;
-            }
-            // from bottom to left
-            let mut x = bottom.0;
-            let mut y = bottom.1;
-            'out:
-            while y <= sy {
-                if 0 + exp_x <= x && x <= border + exp_x && 0 + exp_y <= y && y <= border + exp_y {
-                    let seen = Self::check_all(&sensors, &dists, i, x, y);
-                    if !seen {
-                        s_x = x as u128 - exp_x as u128;
-                        s_y = y as u128 - exp_y as u128;
-                        break 'out;
-                    }
-                }
-                x -= 1;
-                y += 1;
-            }
-        }
-        let fr = s_x * 4_000_000 + s_y;
+        let calc = (0..sensors.len())
+            .into_par_iter()
+            .map(|i| {
+                Self::compute(&sensors, &dists, exp_x, exp_y, i)
+            })
+            .find_first(|r| r.is_some())
+            .unwrap();
+
+        let (x, y) = calc.unwrap();
+        let fr = x * 4_000_000 + y;
+
         fr.to_string()
     }
 
@@ -196,5 +132,71 @@ impl Day15 {
         max_x += exp_x;
         max_y += exp_y;
         (sensors, dists, min_x, max_x, min_y, test_y, excluded, exp_x, exp_y)
+    }
+
+    fn compute(sensors: &Vec<(i32, i32)>, dists: &Vec<i32>, exp_x: i32, exp_y: i32, i: usize) -> Option<(u128, u128)> {
+        // iterate over borders
+        let (sx, sy) = sensors[i];
+        let dist = dists[i] + 1;
+        let left = (sx - dist, sy);
+        let top = (sx, sy - dist);
+        let right = (sx + dist, sy);
+        let bottom = (sx, sy + dist);
+        // from left to top
+        let mut x = left.0;
+        let mut y = left.1;
+        while x <= sx {
+            let res = Self::check_all_for_x_y(&sensors, &dists, exp_x, exp_y, i, x, y);
+            if res.is_some() {
+                return res;
+            }
+            x += 1;
+            y += 1;
+        }
+        // from top to right
+        let mut x = top.0;
+        let mut y = top.1;
+        while y >= sy {
+            let res = Self::check_all_for_x_y(&sensors, &dists, exp_x, exp_y, i, x, y);
+            if res.is_some() {
+                return res;
+            }
+            x += 1;
+            y -= 1;
+        }
+        // from right to bottom
+        let mut x = right.0;
+        let mut y = right.1;
+        while x >= sx {
+            let res = Self::check_all_for_x_y(&sensors, &dists, exp_x, exp_y, i, x, y);
+            if res.is_some() {
+                return res;
+            }
+            x -= 1;
+            y -= 1;
+        }
+        // from bottom to left
+        let mut x = bottom.0;
+        let mut y = bottom.1;
+        while y <= sy {
+            let res = Self::check_all_for_x_y(&sensors, &dists, exp_x, exp_y, i, x, y);
+            if res.is_some() {
+                return res;
+            }
+            x -= 1;
+            y += 1;
+        }
+        return None;
+    }
+
+    fn check_all_for_x_y(sensors: &&Vec<(i32, i32)>, dists: &&Vec<i32>, exp_x: i32, exp_y: i32, i: usize, mut x: i32, mut y: i32) -> Option<(u128, u128)> {
+        let border: i32 = 4_000_000;
+        if 0 + exp_x <= x && x <= border + exp_x && 0 + exp_y <= y && y <= border + exp_y {
+            let seen = Self::check_all(&sensors, &dists, i, x, y);
+            if !seen {
+                return Some((x as u128 - exp_x as u128, y as u128 - exp_y as u128));
+            }
+        }
+        return None;
     }
 }
