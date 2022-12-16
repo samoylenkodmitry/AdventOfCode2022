@@ -19,24 +19,26 @@ mod day12;
 mod day13;
 mod day14;
 mod day15;
+mod day16;
 
 fn main() {
     let days: Vec<Box<dyn Day>> = vec![
-        Box::new(day1::Day1),
-        Box::new(day2::Day2),
-        Box::new(day3::Day3),
-        Box::new(day4::Day4),
-        Box::new(day5::Day5),
-        Box::new(day6::Day6),
-        Box::new(day7::Day7),
-        Box::new(day8::Day8),
-        Box::new(day9::Day9),
-        Box::new(day10::Day10),
-        Box::new(day11::Day11),
-        Box::new(day12::Day12),
-        Box::new(day13::Day13),
-        Box::new(day14::Day14),
-        Box::new(day15::Day15),
+        //Box::new(day1::Day1),
+        //Box::new(day2::Day2),
+        //Box::new(day3::Day3),
+        //Box::new(day4::Day4),
+        //Box::new(day5::Day5),
+        //Box::new(day6::Day6),
+        //Box::new(day7::Day7),
+        //Box::new(day8::Day8),
+        //Box::new(day9::Day9),
+        //Box::new(day10::Day10),
+        //Box::new(day11::Day11),
+        //Box::new(day12::Day12),
+        //Box::new(day13::Day13),
+        //Box::new(day14::Day14),
+        //Box::new(day15::Day15),
+        Box::new(day16::Day16),
     ];
     let mut results = (0..days.len()).into_par_iter().map(|i| {
         days[i].compute()
