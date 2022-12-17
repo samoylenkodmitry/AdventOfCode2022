@@ -1,5 +1,7 @@
+use std::borrow::Borrow;
 use std::cmp::{max, min};
 use std::collections::{HashMap, HashSet};
+use std::sync::{Arc, Mutex, RwLock};
 use rayon::iter::IntoParallelIterator;
 use crate::day::Day;
 use rayon::prelude::*;
@@ -8,92 +10,6 @@ pub(crate) struct Day16;
 
 impl Day for Day16 {
     fn part1(&self, input: &str) -> String {
-        let (valves, positions, conn_num, flows_num) = Self::parse(input);
-        fn dfs(one: usize, two: usize, time: i32, conn: &Vec<Vec<usize>>, flows: &Vec<i32>, opened: &mut Vec<bool>, cache: &mut HashMap<(usize, usize, i32, Vec<bool>), i32>) -> i32 {
-            if time <= 0 {
-                return 0;
-            }
-            if opened.iter().all(|v| *v) {
-                return 0;
-            }
-            let my_pos = min(one, two);
-            let el_pos = max(one, two);
-            if let Some(v) = cache.get(&(my_pos, el_pos, time, (*opened).clone())) {
-                return *v;
-            }
-            let me_do_not_open = opened[my_pos] || flows[my_pos] == 0;
-            let el_do_not_open = opened[el_pos] || flows[el_pos] == 0;
-            let both_do_not_open = me_do_not_open && el_do_not_open;
-
-            // both open
-            let both_open: i32;
-            if me_do_not_open || el_do_not_open || el_pos == my_pos {
-                both_open = 0;
-            } else {
-                assert!(!opened[my_pos]);
-                assert!(!opened[el_pos]);
-                opened[my_pos] = true;
-                opened[el_pos] = true;
-                both_open = (flows[my_pos] + flows[el_pos]) * (time - 1) + dfs(my_pos, el_pos, time - 1, conn, flows, opened, cache);
-                opened[my_pos] = false;
-                opened[el_pos] = false;
-            }
-            let both_go = conn[my_pos].iter().map(|my_next_pos| {
-                conn[el_pos].iter().map(|el_next_pos| {
-                    dfs(*my_next_pos, *el_next_pos, time - 1, conn, flows, opened, cache)
-                }).max().unwrap()
-            }).max().unwrap();
-            let mut max_flow = max(both_open, both_go);
-
-            if !both_do_not_open {
-                if el_do_not_open {
-                    assert!(!opened[my_pos]);
-                    opened[my_pos] = true;
-                    max_flow = max_flow.max(flows[my_pos] * (time - 1) + conn[el_pos].iter().map(|el_next_pos| {
-                        let me_open_and_el_go = dfs(my_pos, *el_next_pos, time - 1, conn, flows, opened, cache);
-                        me_open_and_el_go
-                    }).max().unwrap());
-                    opened[my_pos] = false;
-                } else if me_do_not_open {
-                    assert!(!opened[el_pos]);
-                    opened[el_pos] = true;
-                    max_flow = max_flow.max(flows[el_pos] * (time - 1) + conn[my_pos].iter().map(|my_next_pos| {
-                        let el_open_and_me_go = dfs(*my_next_pos, el_pos, time - 1, conn, flows, opened, cache);
-                        el_open_and_me_go
-                    }).max().unwrap());
-                    opened[el_pos] = false;
-                } else {
-                    assert!(!opened[my_pos]);
-                    assert!(!opened[el_pos]);
-
-                    opened[my_pos] = true;
-                    max_flow = max_flow.max(flows[my_pos] * (time - 1) + conn[el_pos].iter().map(|el_next_pos| {
-                        let me_open_and_el_go = dfs(my_pos, *el_next_pos, time - 1, conn, flows, opened, cache);
-                        me_open_and_el_go
-                    }).max().unwrap());
-                    opened[my_pos] = false;
-                    opened[el_pos] = true;
-                    max_flow = max_flow.max(flows[el_pos] * (time - 1) + conn[my_pos].iter().map(|my_next_pos| {
-                        let el_open_and_me_go = dfs(*my_next_pos, el_pos, time - 1, conn, flows, opened, cache);
-                        el_open_and_me_go
-                    }).max().unwrap());
-                    opened[el_pos] = false;
-                }
-            }
-
-            cache.insert((my_pos, el_pos, time, (*opened).clone()), max_flow);
-            max_flow
-        }
-
-        let mut visited = vec![false; valves.len()];
-        let mut cache: HashMap<(usize, usize, i32, Vec<bool>), i32> = HashMap::new();
-        println!("positions count {}, p*time", positions.len());
-        let max_flow = dfs(positions["AA"], positions["AA"], 26, &conn_num, &flows_num, &mut visited, &mut cache);
-        panic!("max_flow: {}", max_flow);
-        max_flow.to_string()
-    }
-
-    fn part2(&self, input: &str) -> String {
         let (valves, positions, conn_num, flows_num) = Self::parse(input);
         fn dfs(pos: usize, time: i32, conn: &Vec<Vec<usize>>, flows: &Vec<i32>, opened: &mut Vec<bool>, cache: &mut HashMap<(usize, i32, Vec<bool>), i32>, min_depth: &mut usize) -> i32 {
             if time <= 0 {
@@ -127,7 +43,81 @@ impl Day for Day16 {
         let mut cache: HashMap<(usize, i32, Vec<bool>), i32> = HashMap::new();
         let mut min_depth = usize::MAX;
         let max_flow = dfs(positions["AA"], 30, &conn_num, &flows_num, &mut visited, &mut cache, &mut min_depth);
-        //panic!("max_flow: {}", max_flow);
+        max_flow.to_string()
+    }
+
+    fn part2(&self, input: &str) -> String {
+        let (valves, positions, conn_num, flows_num) = Self::parse(input);
+        fn dfs(one: usize, two: usize, time: i32, conn: &Vec<Vec<usize>>, flows: &Vec<i32>, opened: u64, cache: &mut HashMap<(usize, usize, i32, u64), i32>) -> i32 {
+            if time <= 0 {
+                return 0;
+            }
+            if opened == (1 << (1 + conn.len())) - 1 {
+                return 0;
+            }
+            let my_pos = min(one, two);
+            let el_pos = max(one, two);
+
+            if let Some(&res) = cache.get(&(my_pos, el_pos, time, opened)) {
+                return res;
+            }
+            let opened_el = (opened & (1 << el_pos)) != 0;
+            let opened_my = (opened & (1 << my_pos)) != 0;
+            let me_do_not_open = opened_my || flows[my_pos] == 0;
+            let el_do_not_open = opened_el || flows[el_pos] == 0;
+            let both_do_not_open = me_do_not_open && el_do_not_open;
+
+            // both open
+            let both_open: i32;
+            if me_do_not_open || el_do_not_open || el_pos == my_pos {
+                both_open = 0;
+            } else {
+                let opened = opened | (1 << my_pos) | (1 << el_pos);
+                both_open = (flows[my_pos] + flows[el_pos]) * (time - 1) + dfs(my_pos, el_pos, time - 1, conn, flows, opened, cache);
+            }
+            let mut max_flow = both_open;
+
+            if !both_do_not_open {
+                if el_do_not_open {
+                    let opened = opened | (1 << my_pos);
+                    max_flow = max_flow.max(flows[my_pos] * (time - 1) + (&conn[el_pos]).iter().map(|el_next_pos| {
+                        let me_open_and_el_go = dfs(my_pos, *el_next_pos, time - 1, conn, flows, opened, cache);
+                        me_open_and_el_go
+                    }).max().unwrap());
+                } else if me_do_not_open {
+                    let opened = opened | (1 << el_pos);
+                    max_flow = max_flow.max(flows[el_pos] * (time - 1) + (&conn[my_pos]).iter().map(|my_next_pos| {
+                        let el_open_and_me_go = dfs(*my_next_pos, el_pos, time - 1, conn, flows, opened, cache);
+                        el_open_and_me_go
+                    }).max().unwrap());
+                } else {
+                    let opened_1 = opened | (1 << my_pos);
+                    max_flow = max_flow.max(flows[my_pos] * (time - 1) + (&conn[el_pos]).iter().map(|el_next_pos| {
+                        let me_open_and_el_go = dfs(my_pos, *el_next_pos, time - 1, conn, flows, opened_1, cache);
+                        me_open_and_el_go
+                    }).max().unwrap());
+                    let opened_2 = opened | (1 << el_pos);
+                    max_flow = max_flow.max(flows[el_pos] * (time - 1) + (&conn[my_pos]).iter().map(|my_next_pos| {
+                        let el_open_and_me_go = dfs(*my_next_pos, el_pos, time - 1, conn, flows, opened_2, cache);
+                        el_open_and_me_go
+                    }).max().unwrap());
+                }
+            }
+            if both_open == 0 {
+                let both_go = (&conn[my_pos]).iter().map(|my_next_pos| {
+                    conn[el_pos].iter().map(|el_next_pos| {
+                        dfs(*my_next_pos, *el_next_pos, time - 1, conn, flows, opened, cache)
+                    }).max().unwrap()
+                }).max().unwrap();
+                max_flow = max_flow.max(both_go);
+            }
+
+            cache.insert((my_pos, el_pos, time, opened), max_flow);
+            max_flow
+        }
+
+        let mut cache: HashMap<(usize, usize, i32, u64), i32> = HashMap::new();
+        let max_flow = dfs(positions["AA"], positions["AA"], 26, &conn_num, &flows_num, 0 as u64, &mut cache);
         max_flow.to_string()
     }
 

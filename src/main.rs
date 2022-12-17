@@ -73,7 +73,7 @@ fn main() {
 
     for line in contents.lines() {
         if !line.starts_with("Day") {
-            let entry = table.entry(day_num).or_insert(("".to_string(), 
+            let entry = table.entry(day_num).or_insert(("".to_string(),
                                                         "".to_string(),
                                                         "".to_string(),
                                                         "".to_string()));
@@ -82,7 +82,6 @@ fn main() {
             if part_num == 1 {
                 if part.contains("test") {
                     entry.0 = format!("{}<br>```{}```", entry.0, value);
-                    
                 } else {
                     entry.2 = format!("{}<br>```{}```", entry.2, value);
                 }
