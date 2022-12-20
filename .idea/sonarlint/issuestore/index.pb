@@ -39,8 +39,6 @@ A
 inputs/day12.txt,1/b/1b174f51909365300809976a58e0ea8a24babcb3
 B
 questions/day12.md,6/b/6b1f2099b434689a89cdbb1342f22ff28f96a07f
-;
-src/day9.rs,c/a/cacf3d8a89f530f09ebff073e64d832ea0b096b6
 @
 inputs/day13.txt,8/9/89a91cb85c85b6429896a08a8fc904167afd3a2c
 :
