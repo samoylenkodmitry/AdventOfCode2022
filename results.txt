@@ -27,25 +27,33 @@ Day 12: part 2: 375 (0 ms)
 Day 13: part 1 test: 13
 Day 13: part 2 test: 140
 Day 13: part 1: 6623 (1 ms)
-Day 13: part 2: 23049 (0 ms)
+Day 13: part 2: 23049 (1 ms)
 Day 14: part 1 test: 24
 Day 14: part 2 test: 93
 Day 14: part 1: 1513 (0 ms)
-Day 14: part 2: 22646 (8 ms)
+Day 14: part 2: 22646 (5 ms)
 Day 15: part 1 test: 0
 Day 15: part 2 test: 24
-Day 15: part 1: 5511201 (150 ms)
-Day 15: part 2: 11318723411840 (62 ms)
+Day 15: part 1: 5511201 (149 ms)
+Day 15: part 2: 11318723411840 (63 ms)
+Day 16: part 1 test: 1651
+Day 16: part 2 test: 1707
+Day 16: part 1: 1789 (946 ms)
+Day 16: part 2: 2496 (163679 ms)
 Day 17: part 1 test: 3068
 Day 17: part 2 test: 1514285714288
 Day 17: part 1: 3209 (2 ms)
 Day 17: part 2: 1580758017509 (2 ms)
 Day 18: part 1 test: 64
 Day 18: part 2 test: 58
-Day 18: part 1: 3454 (0 ms)
-Day 18: part 2: 2014 (1 ms)
+Day 18: part 1: 3454 (2 ms)
+Day 18: part 2: 2014 (5 ms)
 Day 1: part 1: 75622 (0 ms)
 Day 1: part 2: 213159 (0 ms)
+Day 23: part 1 test: 110
+Day 23: part 2 test: 20
+Day 23: part 1: 4075 (55 ms)
+Day 23: part 2: 950 (5400 ms)
 Day 2: part 1: 12645 (0 ms)
 Day 2: part 2: 11756 (0 ms)
 Day 3: part 1 test: 157
@@ -58,7 +66,7 @@ Day 4: part 1: 424 (0 ms)
 Day 4: part 2: 804 (0 ms)
 Day 5: part 1 test: CMZ
 Day 5: part 2 test: MCD
-Day 5: part 1: GRTSWNJHH (0 ms)
+Day 5: part 1: GRTSWNJHH (1 ms)
 Day 5: part 2: QLFQDBBHM (0 ms)
 Day 6: part 1 test: 7
 Day 6: part 2 test: 19

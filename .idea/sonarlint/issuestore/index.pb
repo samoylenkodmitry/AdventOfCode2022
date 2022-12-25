@@ -85,3 +85,5 @@ Cargo.toml,1/b/1b290eb385892bfd4870c08a785598e98c8691b7
 :
 
 results.md,c/e/cebe22e1a442f9604b5ee5bb6266e83d6fc5167f
+@
+inputs/day18.txt,e/9/e986121df7a3a1c735240c5b61cf7c28134cef43
